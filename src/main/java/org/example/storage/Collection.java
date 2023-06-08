@@ -27,26 +27,6 @@ public class Collection {
     }
 
 
-    /**
-     * Валидация? полей организации
-     * @param organization организазция для проверки
-     * @return результат валидации
-     */
-    private boolean validate(Organization organization) {
-        if(organization.getName().trim().isEmpty()) {
-            return false;}
-        if(organization.getCoordinates().getY() > 274){
-            return false;}
-        if(organization.getAnnualTurnover()<=0) {
-            return false;}
-        if(organization.getCreationDate()==null) {
-            return false;}
-        if(organization.getType()==null) {
-            return false;}
-        if(organization.getOfficialAddress().getStreet() == null || organization.getOfficialAddress().getStreet().length()>83 || organization.getOfficialAddress().getTown() == null){
-            return false;}
-        return true;
-    }
 
     public void print() {
         collection.forEach(System.out::println);
