@@ -8,13 +8,14 @@ import java.util.Scanner;
 
 public class Lab7 {
     public static void main(String[] args) {
-        Database.getInstance().init();
         Collection collection = Collection.getInstance();
         System.out.println("Connected to database!");
         CommandHandler commandHandler = new CommandHandler();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Sign in or login");
-        System.out.println(RecordsDao.register());
+        String x = RecordsDao.register();
+        System.out.println(x);
+        System.out.println(RecordsDao.sign_in(x));
       while (scanner.hasNextLine()) {
             System.out.println(commandHandler.execute(scanner.nextLine().toLowerCase()));
             collection.sortById();

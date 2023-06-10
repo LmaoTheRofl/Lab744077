@@ -23,7 +23,7 @@ public class RemoveById implements Command{
                     Collection.getInstance().removeById(x);
                     return "Element removed";
                 }}
-            System.out.println("вы не можете удалить объект по этому id");}
+          return "вы не можете удалить объект по этому id";}
 
     }
 

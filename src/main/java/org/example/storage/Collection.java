@@ -13,6 +13,11 @@ import java.util.stream.Collectors;
 public class Collection {
     private ArrayDeque<Organization> collection;
     private static Collection INSTANCE;
+    private long creationTime;
+
+    public long getCreationTime() {
+        return creationTime;
+    }
 
     public static Collection getInstance()  {
         if (INSTANCE == null) {
@@ -22,7 +27,8 @@ public class Collection {
     }
 
     private Collection() {
-       try{ this.collection = Database.getInstance().getAllOrganizations();}
+       try{ this.collection = Database.getInstance().getAllOrganizations();
+           this.creationTime = System.currentTimeMillis();}
        catch (SQLException e) {e.printStackTrace();}
     }
 
@@ -35,13 +41,7 @@ public class Collection {
     public void clear() {
         collection.clear();
     }
-    public FileTime getFileCreationDate(String fileName) {
-        try {
-            return (FileTime) Files.getAttribute((new File(fileName)).toPath(), "creationTime");
-        } catch (IOException e) {
-            return null;
-        }
-    }
+
 
     public ArrayDeque<Organization> getAll() {
         return collection;
@@ -67,9 +67,10 @@ public class Collection {
     }
 
     public void add(Organization organization) {
-        organization.setId((long) RecordsDao.createOrganization(organization));
+        organization.setId(generateId());
         collection.add(organization);
     }
+
     public void sortAscending() {
         ArrayDeque<Organization>  y = new ArrayDeque<Organization>();
         List<Organization> x = new ArrayList<Organization>(collection).stream().sorted(Comparator.comparing(Organization::getAnnualTurnover)).collect(Collectors.toList());
@@ -88,6 +89,13 @@ public class Collection {
         List<Organization> x = new ArrayList<Organization>(collection).stream().sorted(Comparator.comparing(Organization::getType)).collect(Collectors.toList());
         y.addAll(x);
         this.collection = y;
+    }
+    private Long generateId() {
+        Long id =  collection.stream()
+                .map(Organization::getId)
+                .max(Comparator.comparing(Long::longValue))
+                .orElse(0L);
+        return ++id;
     }
 
 

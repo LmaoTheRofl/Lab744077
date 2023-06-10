@@ -13,7 +13,7 @@ public class Help implements Command{
                 ANSI_CYAN+"show"+ANSI_RESET+" : вывести в стандартный поток вывода все элементы коллекции в строковом представлении\n" +
                 ANSI_CYAN+"add {element} "+ANSI_RESET+": добавить новый элемент в коллекцию\n" +
                 ANSI_CYAN+"update id {element} "+ANSI_RESET+": обновить значение элемента коллекции, id которого равен заданному\n" +
-                ANSI_CYAN+"remove_by_id id"+ANSI_RESET+" : удалить элемент из коллекции по его id\n" +
+                ANSI_CYAN+"remove_by_id"+ANSI_RESET+" : удалить элемент из коллекции по его id\n" +
                 ANSI_CYAN+"clear"+ANSI_RESET+" : очистить коллекцию\n" +
                 ANSI_CYAN+"save"+ANSI_RESET+" : сохранить коллекцию в файл\n" +
                 ANSI_CYAN+"execute_script file_name"+ANSI_RESET+" : считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.\n" +

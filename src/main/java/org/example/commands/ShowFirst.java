@@ -11,7 +11,7 @@ public class ShowFirst implements  Command{
     public String execute() {
         return Collection.getInstance()
                 .getAll()
-                .stream().iterator().next().toString();
+                .stream().findFirst().toString();
     }
 
     @Override

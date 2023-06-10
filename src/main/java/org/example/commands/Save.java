@@ -27,10 +27,11 @@ public class Save implements Command{
         String truncateQuery = "TRUNCATE TABLE organizationcatalog";
         PreparedStatement truncateStatement = connection.prepareStatement(truncateQuery);
         truncateStatement.executeUpdate(); // очищаем таблицу
-
-        String insertQuery = "INSERT INTO " +   "organizationcatalog " +"(name, coordinates_x, coordinates_y, creationdate, annualturnover, orgtype, officialaddress_street, officialaddress_town_x, officialaddress_town_y, officialaddress_town_z, creator) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String seqQuery = "ALTER SEQUENCE organizationcatalog_id_seq RESTART WITH 1;";
+        PreparedStatement seqstatement = connection.prepareStatement(seqQuery);
+        seqstatement.executeUpdate();
+        String insertQuery = "INSERT INTO " +  "organizationcatalog " +"(id, name, coordinates_x, coordinates_y, creationdate, annualturnover, orgtype, officialaddress_street, officialaddress_town_x, officialaddress_town_y, officialaddress_town_z, creator) " + "VALUES (nextval('organizationcatalog_id_seq'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement statement = connection.prepareStatement(insertQuery);
-
         for (Organization organization : Collection.getInstance().getAll()) {
             statement.setString(1, organization.getName());
             statement.setFloat(2, organization.getCoordinates().getX());

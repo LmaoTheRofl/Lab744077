@@ -3,40 +3,11 @@ import org.example.organization.*;
 
 import java.sql.*;
 import java.util.*;
-import java.util.Date;
 
 public class RecordsDao {
 
 
-    public static int createOrganization(Organization organization) {
-        int generatedId = -1;
-        Connection connection = Database.getInstance().getConnection();
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO " +   "organizationcatalog " +"(name, coordinates_x, coordinates_y, creationdate, annualturnover, orgtype, officialaddress_street, officialaddress_town_x, officialaddress_town_y, officialaddress_town_z, creator) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")){
-             statement.setString(1, organization.getName());
-             statement.setFloat(2, organization.getCoordinates().getX());
-             statement.setLong(3, organization.getCoordinates().getY());
-             Date creationDate = organization.getCreationDate();
-            Timestamp timestamp = new Timestamp(creationDate.getTime());
-             statement.setTimestamp(4, timestamp);
-             statement.setLong(5, organization.getAnnualTurnover());
-             statement.setObject(6, organization.getType().name(), Types.OTHER);
-             statement.setString(7, organization.getOfficialAddress().getStreet());
-             statement.setDouble(8, organization.getOfficialAddress().getTown().getX());
-             statement.setDouble(9, organization.getOfficialAddress().getTown().getY());
-             statement.setInt(10, organization.getOfficialAddress().getTown().getZ());
-             statement.setString(11, organization.getCreator());
-             statement.executeUpdate();
-            Statement selectStatement = connection.createStatement();
-            try (ResultSet rs = selectStatement.executeQuery("SELECT MAX(id) FROM organizationcatalog")) {
-                if (rs.next()) {
-                    generatedId = rs.getInt(1);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return generatedId;
-}
+
     public static String register() {
         Scanner scanner = new Scanner(System.in);
        try{ Connection connection = Database.getInstance().getConnection();
@@ -59,7 +30,7 @@ public class RecordsDao {
                        throw new SQLException("Registring failed, no rows affected.");
                    }
                }
-               else{System.out.println("Логин уже занят");
+               else{System.out.println("Неверный пароль");
                    register();}
            }
            else {
@@ -69,7 +40,19 @@ public class RecordsDao {
        catch (SQLException e) {e.printStackTrace();}
         return "Welcome!";
     }
+public static String sign_in(String x) {
+    Scanner scanner = new Scanner(System.in);
+        if(x.equals("Welcome!")) {
+            while (true) {
+                System.out.println("Введите пароль");
+                String c = getName(scanner).trim();
+                if(c.equals(User.password)){
+                return"PRIVET!";}
+            }
 
+        }
+        return "";
+}
     public static boolean checkLogin(String login){
         try{
             Connection connection = Database.getInstance().getConnection();

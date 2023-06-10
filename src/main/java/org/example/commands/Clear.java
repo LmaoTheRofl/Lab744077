@@ -1,6 +1,8 @@
 package org.example.commands;
 
+import org.example.organization.Organization;
 import org.example.storage.Collection;
+import org.example.storage.User;
 
 public class Clear implements Command {
     /**
@@ -9,9 +11,12 @@ public class Clear implements Command {
      */
     @Override
     public String execute() {
-        Collection.getInstance().clear();
-        return "Collection cleared";
-    }
+        for(Organization organization : Collection.getInstance().getAll()) {
+            if(organization.getCreator().equals(User.login)){
+                Collection.getInstance().removeById(organization.getId());
+            }
+        } return "Collection cleared";}
+
 
     @Override
     public String getCommandName() {
