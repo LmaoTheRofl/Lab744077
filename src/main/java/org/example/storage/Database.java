@@ -9,8 +9,8 @@ import java.util.Date;
 public class Database {
 
     private static final String DB_URL = "jdbc:postgresql://db:5432/studs";
-    private static final String USER = "s367217";
-    private static final String PASSWORD = "CEHo95y0T65VQNYQ";
+    private static final String USER = "";
+    private static final String PASSWORD = "";
 
     private static Database database;
     private final Connection connection;
